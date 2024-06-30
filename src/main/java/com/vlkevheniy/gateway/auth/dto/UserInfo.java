@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 
+import java.util.List;
+
 @Getter
 @Builder
 @Jacksonized
@@ -12,4 +14,5 @@ import lombok.extern.jackson.Jacksonized;
 public class UserInfo {
     private String email;
     private String name;
+    private List<String> authorities;
 }

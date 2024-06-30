@@ -21,6 +21,7 @@ spring:
       port: 8500
       discovery:
         health-check-path: /health
+        health-check-url: http://host.docker.internal:1000/health
     gateway:
       routes:
         - id: gateway-oauth-route
@@ -31,10 +32,14 @@ spring:
           uri: lb://car-management
           predicates:
             - Path=/api/car/**
-            #- Path=/api/brand/**
           filters:
             - RewritePath=/api/car/(?<remaining>.*), /api/car/${remaining}
-            #- RewritePath=/api/brand/(?<remaining>.*), /${remaining}
+        - id: brand-management-route
+          uri: lb://car-management
+          predicates:
+            - Path=/api/brand/**
+          filters:
+            - RewritePath=/api/brand/(?<remaining>.*), /api/brand/${remaining}
   r2dbc:
     url: "r2dbc:h2:mem:///gwsdb"
   sql:

@@ -29,6 +29,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     private static final String ENDPOINT_CALLBACK = PREFIX_OAUTH + "/callback";
     public static final String COOKIE_AUTH_STATE = "auth-state";
     public static final String COOKIE_SESSION_ID = "SESSION-ID";
+    private static final String FRONTEND_URL = "http://localhost:3050/oauth/redirect";
 
     private final GoogleAuthenticationService googleAuthenticationService;
 
@@ -63,7 +64,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
                 .doOnNext(userInfo -> log.info("User authenticated: {}", userInfo))
                 .flatMap(sessionService::saveSession)
                 .flatMap(session -> sessionService.addSessionCookie(exchange, session))
-                .then(sendRedirect(exchange, "/api/profile"));
+                .then(sendRedirect(exchange, FRONTEND_URL));
     }
 
     private Mono<Void> verifyState(String state, ServerHttpRequest request) {

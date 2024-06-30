@@ -3,6 +3,7 @@ package com.vlkevheniy.gateway.controller;
 import com.vlkevheniy.gateway.auth.dto.UserInfo;
 import com.vlkevheniy.gateway.exception.UnauthorizedException;
 import com.vlkevheniy.gateway.model.UserSession;
+import com.vlkevheniy.gateway.service.ProfileService;
 import com.vlkevheniy.gateway.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,24 +19,10 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ProfileController {
 
-    private final SessionService sessionService;
+    private final ProfileService profileService;
 
     @GetMapping("/profile")
     public Mono<UserInfo> profile(ServerWebExchange exchange) {
-        return sessionService.checkSession(exchange)
-                .flatMap(this::toUserInfo)
-                .onErrorResume(UnauthorizedException.class, e -> {
-                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized access");
-                });
+        return profileService.getAuthUserData(exchange);
     }
-
-    private Mono<UserInfo> toUserInfo(UserSession session) {
-        return Mono.just(UserInfo.builder()
-                .email(session.getEmail())
-                .name(session.getName())
-                .build());
-    }
-
-
-
 }
