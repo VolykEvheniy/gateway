@@ -6,7 +6,6 @@ import com.vlkevheniy.gateway.model.UserSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -18,7 +17,6 @@ import java.util.List;
 public class ProfileService {
 
     private final SessionService sessionService;
-
 
     public Mono<UserInfo> getAuthUserData(ServerWebExchange exchange) {
         return sessionService.checkSession(exchange)
