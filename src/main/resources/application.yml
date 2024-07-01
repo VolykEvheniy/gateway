@@ -41,11 +41,17 @@ spring:
           filters:
             - RewritePath=/api/brand/(?<remaining>.*), /api/brand/${remaining}
   r2dbc:
-    url: "r2dbc:h2:mem:///gwsdb"
+      url: r2dbc:postgresql://localhost:5433/gateway_db
+      username: evheniy
+      password: password123
+  jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
   sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema.sql
+      init:
+        mode: always
+        schema-locations: classpath:schema.sql
 
 resilience4j:
   circuitbreaker:
