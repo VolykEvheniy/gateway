@@ -1,4 +1,5 @@
-# Link of deployed application
+# Link to video
+https://drive.google.com/drive/folders/1YX9x98bej2AwIJ2d8D_2ltIOGkSuCczX
 
 # Backend
 https://github.com/VolykEvheniy/backend-rest-app
